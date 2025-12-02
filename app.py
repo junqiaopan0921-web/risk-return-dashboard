@@ -10,8 +10,8 @@ from datetime import date, timedelta
 # -------------------------------------------------
 def download_price_data(tickers, start, end):
  """Download adjusted close prices from Yahoo Finance."""
-     if len(tickers) == 0:
-         return pd.DataFrame()
+    if len(tickers) == 0:
+     return pd.DataFrame()
  data = yf.download(
      tickers,
      start=start,
