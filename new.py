@@ -74,6 +74,21 @@ def portfolio_metrics(returns_df, weights, risk_free_rate=0.0, alpha=0.95, perio
 # Page config
 # -------------------------------------------------
 st.set_page_config(page_title="StockPeers-style Dashboard", layout="wide")
+st.markdown(
+    """
+    <style>
+    /* Dark background for main page */
+    .main .block-container {
+        background-color: #121212;
+        color: white;
+    }
+    /* Dark scrollbar for sidebar */
+    .css-1d391kg {
+        background-color: #1e1e1e;
+    }
+    </style>
+    """, unsafe_allow_html=True
+)
 st.title("📊 Interactive Risk–Return Dashboard")
 st.markdown(
     "Analyze how different assets balance **risk and return**, "
@@ -126,12 +141,11 @@ if prices.empty:
     st.stop()
 returns = compute_returns(prices)
 
-# Ensure prices and cumulative returns are always DataFrames
+# Ensure DataFrames for single ticker
 if isinstance(prices, pd.Series):
     prices = prices.to_frame()
 if isinstance(returns, pd.Series):
     returns = returns.to_frame()
-
 cum_returns = (1 + returns).cumprod()
 if isinstance(cum_returns, pd.Series):
     cum_returns = cum_returns.to_frame()
@@ -147,7 +161,8 @@ with col1:
         x=prices.index,
         y=prices.columns,
         labels={"value":"Price ($)", "index":"Date", "variable":"Asset"},
-        title="Adjusted Close Prices"
+        title="Adjusted Close Prices",
+        template="plotly_dark"
     )
     st.plotly_chart(price_fig, use_container_width=True)
 with col2:
@@ -156,7 +171,8 @@ with col2:
         x=cum_returns.index,
         y=cum_returns.columns,
         labels={"value":"Growth of $1", "index":"Date", "variable":"Asset"},
-        title="Cumulative Growth"
+        title="Cumulative Growth",
+        template="plotly_dark"
     )
     st.plotly_chart(cum_fig, use_container_width=True)
 
@@ -191,7 +207,8 @@ scatter_fig = px.scatter(
     size="Annualized Return",
     hover_data=["Sharpe Ratio", "Max Drawdown"],
     labels={"Annualized Volatility":"Risk", "Annualized Return":"Return"},
-    title="Risk vs Return"
+    title="Risk vs Return",
+    template="plotly_dark"
 )
 scatter_fig.update_traces(textposition="top center")
 st.plotly_chart(scatter_fig, use_container_width=True)
@@ -237,7 +254,8 @@ cum_fig2 = px.line(
     x=cum_df.index,
     y=cum_df.columns,
     labels={"value":"Growth of $1","index":"Date","variable":"Portfolio"},
-    title="Portfolio vs Benchmarks"
+    title="Portfolio vs Benchmarks",
+    template="plotly_dark"
 )
 st.plotly_chart(cum_fig2, use_container_width=True)
 
