@@ -10,26 +10,27 @@ from datetime import date, timedelta
 # -------------------------------------------------
 def download_price_data(tickers, start, end):
  """Download adjusted close prices from Yahoo Finance."""
- if len(tickers) == 0:
- return pd.DataFrame()
+     if len(tickers) == 0:
+         return pd.DataFrame()
  data = yf.download(
- tickers,
- start=start,
- end=end,
- auto_adjust=True,
- progress=False,
- )
+     tickers,
+     start=start,
+     end=end,
+     auto_adjust=True,
+     progress=False,
+     )
  if isinstance(data.columns, pd.MultiIndex):
- data = data["Close"]
+     data = data["Close"]
  else:
- data = data.to_frame(name=tickers[0])
+     data = data.to_frame(name=tickers[0])
  return data.dropna(how="all")
+
 def compute_returns(price_df):
- """Daily returns."""
- return price_df.pct_change().dropna()
+     """Daily returns."""
+     return price_df.pct_change().dropna()
 def annualized_return(returns, periods_per_year=252):
- mean_period = returns.mean()
- return (1 + mean_period) ** periods_per_year - 1
+     mean_period = returns.mean()
+     return (1 + mean_period) ** periods_per_year - 1
 def annualized_volatility(returns, periods_per_year=252):
  return returns.std() * np.sqrt(periods_per_year)
 def sharpe_ratio(returns, risk_free_rate=0.0, periods_per_year=252):
