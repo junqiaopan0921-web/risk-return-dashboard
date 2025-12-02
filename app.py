@@ -216,8 +216,7 @@ if weight_mode == "Equal weight":
 else:
  weights = [custom_weights[t] for t in selected_tickers]
  if sum(weights) == 0:
- st.error("All custom weights are zero. Adjust them in the
-sidebar.")
+ st.error("All custom weights are zero. Adjust them in the sidebar.")
  st.stop()
 portfolio_info, port_returns = portfolio_metrics(
  returns[selected_tickers],
