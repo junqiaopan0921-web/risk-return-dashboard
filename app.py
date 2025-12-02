@@ -9,16 +9,16 @@ from datetime import date, timedelta
 # Helper functions
 # -------------------------------------------------
 def download_price_data(tickers, start, end):
- """Download adjusted close prices from Yahoo Finance."""
+    """Download adjusted close prices from Yahoo Finance."""
     if len(tickers) == 0:
-         return pd.DataFrame()
+        return pd.DataFrame()
  data = yf.download(
-     tickers,
-     start=start,
-     end=end,
-     auto_adjust=True,
-     progress=False,
-     )
+        tickers,
+        start=start,
+        end=end,
+        auto_adjust=True,
+        progress=False,
+    )
  if isinstance(data.columns, pd.MultiIndex):
      data = data["Close"]
  else:
