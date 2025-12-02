@@ -126,12 +126,20 @@ if prices.empty:
     st.stop()
 returns = compute_returns(prices)
 
+# Ensure prices and cumulative returns are always DataFrames
+if isinstance(prices, pd.Series):
+    prices = prices.to_frame()
+if isinstance(returns, pd.Series):
+    returns = returns.to_frame()
+
+cum_returns = (1 + returns).cumprod()
+if isinstance(cum_returns, pd.Series):
+    cum_returns = cum_returns.to_frame()
+
 # -------------------------------------------------
 # Price & cumulative returns charts (side-by-side)
 # -------------------------------------------------
 st.subheader("📈 Price History & Cumulative Returns")
-cum_returns = (1 + returns).cumprod()
-
 col1, col2 = st.columns(2)
 with col1:
     price_fig = px.line(
