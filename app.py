@@ -20,10 +20,10 @@ def download_price_data(tickers, start, end):
         progress=False,
     )
  if isinstance(data.columns, pd.MultiIndex):
-     data = data["Close"]
- else:
-     data = data.to_frame(name=tickers[0])
- return data.dropna(how="all")
+        data = data["Close"]
+    else:
+        data = data.to_frame(name=tickers[0])
+    return data.dropna(how="all")
 
 def compute_returns(price_df):
      """Daily returns."""
