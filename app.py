@@ -148,8 +148,7 @@ if start_date >= end_date:
 with st.spinner("Downloading price data from Yahoo Finance..."):
  prices = download_price_data(selected_tickers, start_date, end_date)
 if prices.empty:
- st.error("No price data for this selection (check tickers or date
-range).")
+ st.error("No price data for this selection (check tickers or date range).")
  st.stop()
 returns = compute_returns(prices)
 # -------------------------------------------------
